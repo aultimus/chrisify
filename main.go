@@ -15,7 +15,8 @@ import (
 )
 
 var haarCascade = flag.String("haar", "haarcascade_frontalface_alt.xml", "The location of the Haar Cascade XML configuration to be provided to OpenCV.")
-var facesDir = flag.String("faces", "", "The directory to search for faces.")
+var facesDir = flag.String("faces", "", "The directory to search for faces to draw on the input image")
+var inFile = flag.String("input", "", "input image to draw faces on")
 
 func main() {
 	flag.Parse()
@@ -40,11 +41,13 @@ func main() {
 		panic("no faces found")
 	}
 
-	file := flag.Arg(0)
+	if *inFile == "" {
+		panic("no input file specified")
+	}
 
 	finder := facefinder.NewFinder(*haarCascade)
 
-	baseImage := loadImage(file)
+	baseImage := loadImage(*inFile)
 
 	faces := finder.Detect(baseImage)
 
