@@ -1,7 +1,10 @@
-package main
+package gofaceswap
 
 import (
 	"image"
+	"image/draw"
+	"image/jpeg"
+	"io"
 	"io/ioutil"
 	"math/rand"
 	"os"
@@ -9,6 +12,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/aultimus/gofaceswap/facefinder"
 	"github.com/disintegration/imaging"
 )
 
@@ -77,4 +81,54 @@ func (fl *FaceList) Load(dir string) error {
 		}
 	}
 	return nil
+}
+
+func FaceSwap(baseImage image.Image, outFaces FaceList, haarFPath string,
+	out io.Writer) {
+
+	finder := facefinder.NewFinder(haarFPath)
+
+	faces := finder.Detect(baseImage)
+
+	bounds := baseImage.Bounds()
+
+	canvas := canvasFromImage(baseImage)
+
+	for _, face := range faces {
+		rect := rectMargin(30.0, face)
+
+		newFace := outFaces.Random()
+		if newFace == nil {
+			panic("nil face")
+		}
+		chrisFace := imaging.Fit(newFace, rect.Dx(), rect.Dy(), imaging.Lanczos)
+
+		draw.Draw(
+			canvas,
+			rect,
+			chrisFace,
+			bounds.Min,
+			draw.Over,
+		)
+	}
+
+	if len(faces) == 0 {
+		face := imaging.Resize(
+			outFaces[0],
+			bounds.Dx()/3,
+			0,
+			imaging.Lanczos,
+		)
+		face_bounds := face.Bounds()
+		draw.Draw(
+			canvas,
+			bounds,
+			face,
+			bounds.Min.Add(image.Pt(-bounds.Max.X/2+face_bounds.Max.X/2, -bounds.Max.Y+int(float64(face_bounds.Max.Y)/1.9))),
+			draw.Over,
+		)
+	}
+
+	jpeg.Encode(out, canvas, &jpeg.Options{jpeg.DefaultQuality})
+
 }

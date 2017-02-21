@@ -1,4 +1,4 @@
-package main
+package gofaceswap
 
 import (
 	"image"
@@ -22,7 +22,7 @@ func rectMargin(pct float64, rect image.Rectangle) image.Rectangle {
 	)
 }
 
-func loadImage(file string) image.Image {
+func LoadImage(file string) image.Image {
 	reader, err := os.Open(file)
 	if err != nil {
 		log.Fatalf("error loading %s: %s", file, err)
