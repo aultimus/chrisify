@@ -9,11 +9,10 @@ import (
 	"github.com/aultimus/gofaceswap"
 )
 
-var haarCascade = flag.String("haar", "haarcascade_frontalface_alt.xml", "The location of the Haar Cascade XML configuration to be provided to OpenCV.")
-var facesDir = flag.String("faces", "", "The directory to search for faces to draw on the input image")
-var inFile = flag.String("input", "", "input image to draw faces on")
-
 func main() {
+	var haarCascade = flag.String("haar", "haarcascade_frontalface_alt.xml", "The location of the Haar Cascade XML configuration to be provided to OpenCV.")
+	var facesDir = flag.String("faces", "", "The directory to search for faces to draw on the input image")
+	var inFile = flag.String("input", "", "input image to draw faces on")
 	flag.Parse()
 
 	var facesPath string
