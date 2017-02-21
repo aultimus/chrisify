@@ -95,14 +95,11 @@ func FaceListFromDir(dir string) (FaceList, error) {
 // baseImage 	- the base image upon which to draw
 // outFaces		- a FaceList of faces to draw on the base image. A FaceList
 //				can be obtained via FaceListFromDir()
-// haarFPath	- path to a Haar Cascade XML configuration file
+// finder		- can be obtained via facefinder.NewFinder("/path/to/haar.xml")
 // out			- io.Writer to write faceswapped image to, allows flexibility
 //				in that it can write to stdout or a file
-func FaceSwap(baseImage image.Image, outFaces FaceList, haarFPath string,
-	out io.Writer) {
-
-	finder := facefinder.NewFinder(haarFPath)
-
+func FaceSwap(baseImage image.Image, outFaces FaceList,
+	finder *facefinder.Finder, out io.Writer) {
 	faces := finder.Detect(baseImage)
 
 	bounds := baseImage.Bounds()

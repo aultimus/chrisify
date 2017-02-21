@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/aultimus/gofaceswap"
+	"github.com/aultimus/gofaceswap/facefinder"
 )
 
 // usage: go run gofaceswap/main.go --haar haarcascade_frontalface_alt.xml  --faces ~/Desktop/faces --input ~/Desktop/cats-jones.jpg > out.jpg
@@ -38,5 +39,6 @@ func main() {
 	}
 
 	baseImage := gofaceswap.LoadImage(*inFile)
-	gofaceswap.FaceSwap(baseImage, outFaces, *haarCascade, os.Stdout)
+	finder := facefinder.NewFinder(*haarCascade)
+	gofaceswap.FaceSwap(baseImage, outFaces, finder, os.Stdout)
 }
