@@ -9,6 +9,7 @@ import (
 	"github.com/aultimus/gofaceswap"
 )
 
+// usage: go run gofaceswap/main.go --haar haarcascade_frontalface_alt.xml  --faces ~/Desktop/faces --input ~/Desktop/cats-jones.jpg > out.jpg
 func main() {
 	var haarCascade = flag.String("haar", "haarcascade_frontalface_alt.xml", "The location of the Haar Cascade XML configuration to be provided to OpenCV.")
 	var facesDir = flag.String("faces", "", "The directory to search for faces to draw on the input image")
