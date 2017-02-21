@@ -83,6 +83,14 @@ func (fl *FaceList) Load(dir string) error {
 	return nil
 }
 
+// FaceListFromDir searches the specified directory for pngs,
+// and constructs a facelist from them.
+func FaceListFromDir(dir string) (FaceList, error) {
+	var fl FaceList
+	err := fl.Load(dir)
+	return fl, err
+}
+
 func FaceSwap(baseImage image.Image, outFaces FaceList, haarFPath string,
 	out io.Writer) {
 

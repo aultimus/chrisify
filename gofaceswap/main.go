@@ -28,8 +28,7 @@ func main() {
 		panic(err)
 	}
 
-	var outFaces gofaceswap.FaceList
-	err = outFaces.Load(facesPath)
+	outFaces, err := gofaceswap.FaceListFromDir(facesPath)
 	if err != nil {
 		panic(err)
 	}
