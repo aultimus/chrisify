@@ -91,6 +91,13 @@ func FaceListFromDir(dir string) (FaceList, error) {
 	return fl, err
 }
 
+// FaceSwap takes a base image upon which to draw, a FaceList, of faces to be
+// baseImage 	- the base image upon which to draw
+// outFaces		- a FaceList of faces to draw on the base image. A FaceList
+//				can be obtained via FaceListFromDir()
+// haarFPath	- path to a Haar Cascade XML configuration file
+// out			- io.Writer to write faceswapped image to, allows flexibility
+//				in that it can write to stdout or a file
 func FaceSwap(baseImage image.Image, outFaces FaceList, haarFPath string,
 	out io.Writer) {
 
