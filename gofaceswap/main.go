@@ -15,18 +15,17 @@ func main() {
 	var inFile = flag.String("input", "", "input image to draw faces on")
 	flag.Parse()
 
-	var facesPath string
-	var err error
-
 	if *inFile == "" {
 		panic("no input file specified")
 	}
 
-	if *facesDir != "" {
-		facesPath, err = filepath.Abs(*facesDir)
-		if err != nil {
-			panic(err)
-		}
+	if *facesDir == "" {
+		panic("no faces dir specified")
+	}
+
+	facesPath, err := filepath.Abs(*facesDir)
+	if err != nil {
+		panic(err)
 	}
 
 	var outFaces gofaceswap.FaceList
